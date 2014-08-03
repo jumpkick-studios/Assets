@@ -381,14 +381,15 @@ class Manager
 	 */
 	protected function jsPipeline()
 	{
-		$file = md5(implode($this->js)).'.js';
-		$relative_path = "{$this->js_dir}/{$this->pipeline_dir}/$file";
-		$absolute_path = $this->public_dir . DIRECTORY_SEPARATOR . $this->js_dir . DIRECTORY_SEPARATOR . $this->pipeline_dir . DIRECTORY_SEPARATOR . $file;
 		$timestamp = (intval($this->pipeline) > 1) ? '?' . $this->pipeline : null;
-
-		// If pipeline exist return it
-		if(file_exists($absolute_path))
-			return $relative_path . $timestamp;
+	        $file = md5(implode($this->js).$timestamp) . '.js';
+	        $relative_path = "{$this->js_dir}/{$this->pipeline_dir}/$file";
+	        $absolute_path = $this->public_dir . DIRECTORY_SEPARATOR . $this->js_dir . DIRECTORY_SEPARATOR . $this->pipeline_dir . DIRECTORY_SEPARATOR . $file;
+	        
+	        // If pipeline exist return it
+	        if (file_exists($absolute_path))
+	            return $relative_path . $timestamp;
+	
 
 		// Create destination directory
 		$directory = $this->public_dir . DIRECTORY_SEPARATOR . $this->js_dir . DIRECTORY_SEPARATOR . $this->pipeline_dir;
